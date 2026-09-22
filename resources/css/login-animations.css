@@ -1,0 +1,108 @@
+/* Login page — custom animations (KasPro).
+   Pilih animasi ringan: hanya mengubah transform & opacity / background-position untuk menghindari reflow. */
+
+/* Entrance: fade-in + slide-up */
+@keyframes rise-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.animate-rise {
+    animation: rise-up 0.7s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+}
+
+/* Floater halus untuk blob background (loop, transform only) */
+@keyframes float-soft {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    33%  { transform: translate3d(40px, -30px, 0) scale(1.12); }
+    66%  { transform: translate3d(-30px, 25px, 0) scale(0.94); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+.mesh-blob {
+    animation: float-soft var(--float-dur, 22s) ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Gradient mesh bergerak looping (background-position, tanpa reflow) */
+@keyframes mesh-drift {
+    0%   { background-position: 0% 50%, 100% 50%, 50% 100%; }
+    50%  { background-position: 100% 50%, 0% 50%, 50% 0%; }
+    100% { background-position: 0% 50%, 100% 50%, 50% 100%; }
+}
+.mesh-gradient {
+    background:
+        radial-gradient(60% 60% at 20% 30%, rgba(99, 102, 241, 0.45) 0%, transparent 60%),
+        radial-gradient(50% 50% at 80% 20%, rgba(168, 85, 247, 0.30) 0%, transparent 60%),
+        radial-gradient(70% 70% at 60% 85%, rgba(34, 211, 238, 0.22) 0%, transparent 65%);
+    background-size: 200% 200%, 200% 200%, 200% 200%;
+    animation: mesh-drift 26s ease-in-out infinite;
+    will-change: background-position;
+}
+
+/* Grid halus yang bergerak pelan ke atas */
+@keyframes grid-rise {
+    from { background-position: 0 0; }
+    to   { background-position: 0 32px; }
+}
+.grid-overlay {
+    background-image:
+        linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    animation: grid-rise 18s linear infinite;
+    will-change: background-position;
+}
+
+/* Shake halus untuk field validasi error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-7px); }
+    40%      { transform: translateX(7px); }
+    60%      { transform: translateX(-5px); }
+    80%      { transform: translateX(5px); }
+}
+.animate-shake {
+    animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Pesan error / status: fade-in lembut */
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+    animation: fade-in-up 0.35s ease-out both;
+}
+
+/* Logo melayang pelan */
+@keyframes float-logo {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+.animate-float-logo {
+    animation: float-logo 6s ease-in-out infinite;
+}
+
+/* Glow pulsa di belakang kartu */
+@keyframes glow-pulse {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.6; }
+}
+.animate-glow-pulse {
+    animation: glow-pulse 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-rise,
+    .animate-shake,
+    .animate-fade-in {
+        animation: none;
+    }
+    .mesh-gradient,
+    .mesh-blob,
+    .grid-overlay,
+    .animate-float-logo,
+    .animate-glow-pulse {
+        animation-duration: 0.001s;
+        animation-iteration-count: 1;
+    }
+}

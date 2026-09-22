@@ -1,0 +1,423 @@
+{
+    "meta": {
+        "judul": "Palet Warna Kain Lengkap",
+        "deskripsi": "Referensi warna kain untuk sistem gudang bahan baku. Field 'in_system' menandai apakah warna ini sudah dipakai di 39 bahan baku saat ini.",
+        "total_warna": 112,
+        "total_kategori": 8
+    },
+    "kategori": [
+        {
+            "nama_kategori": "Merah",
+            "warna": [
+                {
+                    "nama": "merah",
+                    "hex": "#E53935"
+                },
+                {
+                    "nama": "maroon",
+                    "hex": "#800000"
+                },
+                {
+                    "nama": "burgundy",
+                    "hex": "#800020"
+                },
+                {
+                    "nama": "benhur",
+                    "hex": "#8B3A2B"
+                },
+                {
+                    "nama": "merah cabai",
+                    "hex": "#C41E3A"
+                },
+                {
+                    "nama": "merah bata",
+                    "hex": "#B7410E"
+                },
+                {
+                    "nama": "crimson",
+                    "hex": "#DC143C"
+                },
+                {
+                    "nama": "scarlet",
+                    "hex": "#FF2400"
+                },
+                {
+                    "nama": "wine",
+                    "hex": "#722F37"
+                },
+                {
+                    "nama": "rose red",
+                    "hex": "#C21E56"
+                },
+                {
+                    "nama": "salmon",
+                    "hex": "#FA8072"
+                },
+                {
+                    "nama": "coral",
+                    "hex": "#FF7F50"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Oranye & Coklat",
+            "warna": [
+                {
+                    "nama": "orange",
+                    "hex": "#FFA500"
+                },
+                {
+                    "nama": "fanta",
+                    "hex": "#FF6600"
+                },
+                {
+                    "nama": "peach",
+                    "hex": "#FFCBA4"
+                },
+                {
+                    "nama": "coklat tua",
+                    "hex": "#3B2417"
+                },
+                {
+                    "nama": "mocca",
+                    "hex": "#6F4E37"
+                },
+                {
+                    "nama": "mustard",
+                    "hex": "#E1AD01"
+                },
+                {
+                    "nama": "coklat muda",
+                    "hex": "#A0714D"
+                },
+                {
+                    "nama": "tan",
+                    "hex": "#D2B48C"
+                },
+                {
+                    "nama": "camel",
+                    "hex": "#C19A6B"
+                },
+                {
+                    "nama": "karamel",
+                    "hex": "#AF6E4D"
+                },
+                {
+                    "nama": "chocolate",
+                    "hex": "#7B3F00"
+                },
+                {
+                    "nama": "terracotta",
+                    "hex": "#E2725B"
+                },
+                {
+                    "nama": "rust",
+                    "hex": "#B7410E"
+                },
+                {
+                    "nama": "amber",
+                    "hex": "#FFBF00"
+                },
+                {
+                    "nama": "sienna",
+                    "hex": "#A0522D"
+                },
+                {
+                    "nama": "khaki",
+                    "hex": "#C3B091"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Kuning & Cream",
+            "warna": [
+                {
+                    "nama": "kuning",
+                    "hex": "#FFD700"
+                },
+                {
+                    "nama": "cream",
+                    "hex": "#FFFDD0"
+                },
+                {
+                    "nama": "beige",
+                    "hex": "#E8DCC8"
+                },
+                {
+                    "nama": "kuning lemon",
+                    "hex": "#FFF44F"
+                },
+                {
+                    "nama": "kuning pastel",
+                    "hex": "#FFFAA0"
+                },
+                {
+                    "nama": "gading (ivory)",
+                    "hex": "#FFFFF0"
+                },
+                {
+                    "nama": "vanilla",
+                    "hex": "#F3E5AB"
+                },
+                {
+                    "nama": "gold",
+                    "hex": "#D4AF37"
+                },
+                {
+                    "nama": "mustard muda",
+                    "hex": "#EAC117"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Hijau",
+            "warna": [
+                {
+                    "nama": "hijau botol",
+                    "hex": "#00693E"
+                },
+                {
+                    "nama": "army",
+                    "hex": "#4B5320"
+                },
+                {
+                    "nama": "mint",
+                    "hex": "#AAF0D1"
+                },
+                {
+                    "nama": "hijau tosca",
+                    "hex": "#00827F"
+                },
+                {
+                    "nama": "hijau daun",
+                    "hex": "#4CBB17"
+                },
+                {
+                    "nama": "hijau lumut",
+                    "hex": "#556B2F"
+                },
+                {
+                    "nama": "hijau pupus",
+                    "hex": "#9ACD32"
+                },
+                {
+                    "nama": "hijau emerald",
+                    "hex": "#50C878"
+                },
+                {
+                    "nama": "hijau pastel",
+                    "hex": "#77DD77"
+                },
+                {
+                    "nama": "olive",
+                    "hex": "#808000"
+                },
+                {
+                    "nama": "sage",
+                    "hex": "#9CAF88"
+                },
+                {
+                    "nama": "forest green",
+                    "hex": "#228B22"
+                },
+                {
+                    "nama": "lime",
+                    "hex": "#32CD32"
+                },
+                {
+                    "nama": "teal",
+                    "hex": "#008080"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Biru",
+            "warna": [
+                {
+                    "nama": "navy",
+                    "hex": "#000080"
+                },
+                {
+                    "nama": "denim",
+                    "hex": "#4A6D8C"
+                },
+                {
+                    "nama": "baby blue",
+                    "hex": "#89CFF0"
+                },
+                {
+                    "nama": "turkish",
+                    "hex": "#1CA9C9"
+                },
+                {
+                    "nama": "biru dongker",
+                    "hex": "#191970"
+                },
+                {
+                    "nama": "biru laut",
+                    "hex": "#006994"
+                },
+                {
+                    "nama": "biru langit",
+                    "hex": "#87CEEB"
+                },
+                {
+                    "nama": "biru muda",
+                    "hex": "#ADD8E6"
+                },
+                {
+                    "nama": "biru dodger",
+                    "hex": "#1E90FF"
+                },
+                {
+                    "nama": "biru cobalt",
+                    "hex": "#0047AB"
+                },
+                {
+                    "nama": "biru elektrik",
+                    "hex": "#7DF9FF"
+                },
+                {
+                    "nama": "biru ferrari",
+                    "hex": "#0057B7"
+                },
+                {
+                    "nama": "toska (turquoise)",
+                    "hex": "#40E0D0"
+                },
+                {
+                    "nama": "periwinkle",
+                    "hex": "#CCCCFF"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Ungu",
+            "warna": [
+                {
+                    "nama": "ungu terong",
+                    "hex": "#5D3954"
+                },
+                {
+                    "nama": "lilac",
+                    "hex": "#C8A2C8"
+                },
+                {
+                    "nama": "ungu tua",
+                    "hex": "#4B0082"
+                },
+                {
+                    "nama": "ungu muda",
+                    "hex": "#B19CD9"
+                },
+                {
+                    "nama": "lavender",
+                    "hex": "#E6E6FA"
+                },
+                {
+                    "nama": "plum",
+                    "hex": "#8E4585"
+                },
+                {
+                    "nama": "violet",
+                    "hex": "#8F00FF"
+                },
+                {
+                    "nama": "mauve",
+                    "hex": "#E0B0FF"
+                },
+                {
+                    "nama": "orchid",
+                    "hex": "#DA70D6"
+                },
+                {
+                    "nama": "indigo",
+                    "hex": "#4B0082"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Pink",
+            "warna": [
+                {
+                    "nama": "pink",
+                    "hex": "#FF69B4"
+                },
+                {
+                    "nama": "pink pastel",
+                    "hex": "#FFD1DC"
+                },
+                {
+                    "nama": "pink fanta",
+                    "hex": "#FF6EC7"
+                },
+                {
+                    "nama": "magenta",
+                    "hex": "#FF00FF"
+                },
+                {
+                    "nama": "fuchsia",
+                    "hex": "#FF00A0"
+                },
+                {
+                    "nama": "dusty pink",
+                    "hex": "#D8A7B1"
+                },
+                {
+                    "nama": "hot pink",
+                    "hex": "#FF69B4"
+                },
+                {
+                    "nama": "blush",
+                    "hex": "#F9C6C9"
+                }
+            ]
+        },
+        {
+            "nama_kategori": "Netral",
+            "warna": [
+                {
+                    "nama": "putih",
+                    "hex": "#FFFFFF",
+                    "border_hint": "#E0E0E0"
+                },
+                {
+                    "nama": "abu misty",
+                    "hex": "#A8A9AD"
+                },
+                {
+                    "nama": "abu tua",
+                    "hex": "#5A5A5A"
+                },
+                {
+                    "nama": "hitam",
+                    "hex": "#000000"
+                },
+                {
+                    "nama": "abu muda",
+                    "hex": "#D3D3D3"
+                },
+                {
+                    "nama": "abu semen",
+                    "hex": "#8C92AC"
+                },
+                {
+                    "nama": "silver",
+                    "hex": "#C0C0C0"
+                },
+                {
+                    "nama": "charcoal",
+                    "hex": "#36454F"
+                },
+                {
+                    "nama": "off white / tulang",
+                    "hex": "#FAF9F6"
+                },
+                {
+                    "nama": "abu batu",
+                    "hex": "#928E85"
+                }
+            ]
+        }
+    ]
+}

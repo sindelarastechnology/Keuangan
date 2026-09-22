@@ -1,0 +1,24 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Satuan;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Satuan>
+ */
+class SatuanFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'nama' => fake()->unique()->randomElement(['pcs', 'kg', 'meter', 'lusin', 'rim', 'box', 'paket', 'karton']),
+        ];
+    }
+}

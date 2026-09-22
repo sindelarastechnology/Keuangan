@@ -1,0 +1,9 @@
+server
+opencode -s ses_f9ab0b91affex0RVZzEQWZOqLf
+opencode -s ses_f5c253d40ffeGzSSpJ2Z8s4gD8
+
+utama
+opencode -s ses_f90cb345fffe1SnfI3aRxkppUp
+
+2
+opencode -s ses_f84181188ffeyJ5gUC24UlbmVL

@@ -8,6 +8,7 @@ use App\Models\Rekening;
 use App\Models\User;
 use App\Services\JournalService;
 use App\Services\PengaturanSistemService;
+use App\Services\TenantDatabase;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -28,56 +29,24 @@ class RekeningIsolasiAkun extends Command
      */
     public function handle(): int
     {
-        $perUser = Rekening::withoutGlobalScope('belongsToUser')
-            ->orderBy('id')
-            ->get()
-            ->groupBy('user_id');
-
-        if ($perUser->isEmpty()) {
-            $this->info('Tidak ada rekening untuk diproses.');
+        if (User::query()->count() === 0) {
+            $this->info('Tidak ada user untuk diproses.');
 
             return self::SUCCESS;
         }
 
-        foreach ($perUser as $userId => $rekenings) {
-            $user = User::find($userId);
-
-            if (! $user) {
-                $this->error("User #{$userId} tidak ditemukan, dilewati.");
-
-                continue;
+        foreach (User::query()->orderBy('id')->get() as $user) {
+            if (TenantDatabase::enabled()) {
+                TenantDatabase::connect($user);
             }
 
-            Auth::guard('web')->setUser($user);
+            try {
+                Auth::guard('web')->setUser($user);
 
-            $bercampur = $rekenings->groupBy('akun_id')->filter(fn ($g) => $g->count() > 1);
-
-            if ($bercampur->isEmpty()) {
-                $this->info("User {$user->email}: semua rekening sudah memakai akun masing-masing.");
-
-                continue;
-            }
-
-            $this->warn('User '.$user->email.': menemukan akun yang dipakai beberapa rekening.');
-
-            foreach ($bercampur as $akunId => $kelompok) {
-                $akunBersama = AkunPerkiraan::withoutGlobalScope('belongsToUser')->find($akunId);
-
-                if (! $akunBersama) {
-                    $this->error("Akun #{$akunId} tidak ditemukan.");
-
-                    continue;
-                }
-
-                $urutan = $kelompok->sortBy('id')->values();
-                $pemegang = $urutan->first();
-                $tersangkut = $urutan->slice(1);
-
-                $this->info("Akun {$akunBersama->kode} {$akunBersama->nama} dipakai {$urutan->count()} rekening; "
-                    ."{$pemegang->nama} tetap memakai akun ini.");
-
-                foreach ($tersangkut as $rekening) {
-                    $this->isolasiRekening($rekening, $akunBersama);
+                $this->prosesUser($user);
+            } finally {
+                if (TenantDatabase::enabled()) {
+                    TenantDatabase::disconnect();
                 }
             }
         }
@@ -85,6 +54,51 @@ class RekeningIsolasiAkun extends Command
         $this->info('Selesai. Silakan buka halaman Rekening untuk memverifikasi saldo tiap rekening.');
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Isolasi akun untuk data satu user pada koneksi aktif.
+     */
+    private function prosesUser(User $user): void
+    {
+        $rekenings = Rekening::query()->orderBy('id')->get();
+
+        if ($rekenings->isEmpty()) {
+            $this->line("User {$user->email}: tidak ada rekening.");
+
+            return;
+        }
+
+        $bercampur = $rekenings->groupBy('akun_id')->filter(fn ($g) => $g->count() > 1);
+
+        if ($bercampur->isEmpty()) {
+            $this->info("User {$user->email}: semua rekening sudah memakai akun masing-masing.");
+
+            return;
+        }
+
+        $this->warn('User '.$user->email.': menemukan akun yang dipakai beberapa rekening.');
+
+        foreach ($bercampur as $akunId => $kelompok) {
+            $akunBersama = AkunPerkiraan::find($akunId);
+
+            if (! $akunBersama) {
+                $this->error("Akun #{$akunId} tidak ditemukan.");
+
+                continue;
+            }
+
+            $urutan = $kelompok->sortBy('id')->values();
+            $pemegang = $urutan->first();
+            $tersangkut = $urutan->slice(1);
+
+            $this->info("Akun {$akunBersama->kode} {$akunBersama->nama} dipakai {$urutan->count()} rekening; "
+                ."{$pemegang->nama} tetap memakai akun ini.");
+
+            foreach ($tersangkut as $rekening) {
+                $this->isolasiRekening($rekening, $akunBersama);
+            }
+        }
     }
 
     private function isolasiRekening(Rekening $rekening, AkunPerkiraan $akunBersama): void
@@ -139,7 +153,7 @@ class RekeningIsolasiAkun extends Command
     {
         $awalan = $rekening->jenis === 'bank' ? 'Bank' : 'Kas';
         $nama = $awalan.' '.$rekening->nama;
-        $parentId = $akunBersama->parent_id ?: AkunPerkiraan::withoutGlobalScope('belongsToUser')
+        $parentId = $akunBersama->parent_id ?: AkunPerkiraan::query()
             ->where('kode', substr($akunBersama->kode, 0, -1))
             ->value('id');
 
@@ -148,7 +162,7 @@ class RekeningIsolasiAkun extends Command
         do {
             $kode = $akunBersama->kode.$n;
             $n++;
-        } while (AkunPerkiraan::withoutGlobalScope('belongsToUser')->where('kode', $kode)->exists());
+        } while (AkunPerkiraan::query()->where('kode', $kode)->exists());
 
         return AkunPerkiraan::create([
             'kode' => $kode,

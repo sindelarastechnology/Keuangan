@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Pengaturan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NomorGenerator
@@ -67,6 +68,10 @@ class NomorGenerator
 
     /**
      * Nomor urut terbesar pada bulan yang sama di tabel terkait prefix.
+     *
+     * Query mentah tidak melewati global scope, jadi pemilik harus difilter
+     * secara eksplisit. Sumbernya sama dengan global scope tenant: user yang
+     * login, atau tenant yang sedang diproses command tanpa Auth.
      */
     protected static function maxSeqBulan(string $prefix, string $bulan, string $tahun): int
     {
@@ -75,8 +80,10 @@ class NomorGenerator
             return 0;
         }
 
+        $pemilik = Auth::id() ?? TenantDatabase::activeUserId();
+
         $rows = DB::table($table)
-            ->when(auth()->check(), fn ($q) => $q->where('user_id', auth()->id()))
+            ->when($pemilik !== null, fn ($q) => $q->where('user_id', $pemilik))
             ->whereYear('tanggal', $tahun)
             ->whereMonth('tanggal', $bulan)
             ->pluck('nomor');

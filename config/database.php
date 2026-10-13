@@ -44,8 +44,26 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        /*
+        | Database tenant: satu file SQLite per user (diisi runtime oleh
+        | App\Services\TenantDatabase). Foreign key tidak ditegakkan karena
+        | kolom actor (created_by/approved_by) dapat menunjuk user di MySQL
+        | shared; integritas dijaga di level aplikasi.
+        */
+        'tenant' => [
+            'driver' => 'sqlite',
+            'url' => null,
+            'database' => env('TENANT_DB_DATABASE', database_path('tenant.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => env('TENANT_DB_FOREIGN_KEYS', false),
+            'busy_timeout' => (int) env('TENANT_DB_BUSY_TIMEOUT', 5000),
+            'journal_mode' => env('TENANT_DB_JOURNAL_MODE', 'wal'),
+            'synchronous' => env('TENANT_DB_SYNCHRONOUS', 'NORMAL'),
+            'transaction_mode' => 'DEFERRED',
+        ],
+
         'mysql' => [
-            'driver' => 'mysql',
+            'driver' => env('DB_SHARED_DRIVER', 'mysql'),
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),

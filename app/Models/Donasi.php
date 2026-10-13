@@ -19,6 +19,8 @@ class Donasi extends Model
 
     public const STATUSES = [self::STATUS_PENDING, self::STATUS_CONFIRMED];
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'user_id',
         'nominal',

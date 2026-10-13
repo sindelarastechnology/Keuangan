@@ -11,6 +11,8 @@ class ChatRoomRead extends Model
      */
     public $incrementing = false;
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'user_id',
         'room_id',

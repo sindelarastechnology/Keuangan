@@ -209,7 +209,6 @@ class TransaksiKasDanTutupBukuTest extends TestCase
     public function test_rekening_baru_ditolak_saat_akun_sudah_dipakai_rekening_lain(): void
     {
         $this->login();
-        $this->rekeningKas(0);
         $akunKas = $this->akun('111');
 
         $response = $this->post(route('rekening.store'), [
@@ -287,6 +286,10 @@ class TransaksiKasDanTutupBukuTest extends TestCase
         $this->login();
         $akunKas = $this->akun('111');
         $akunBeban = $this->akun('523');
+
+        // Provisioning sudah membuat rekening Kas default; hapus agar test membuat
+        // rekening baru secara eksplisit dengan akun yang sama.
+        Rekening::query()->delete();
 
         $this->post(route('rekening.store'), [
             'jenis' => 'kas',

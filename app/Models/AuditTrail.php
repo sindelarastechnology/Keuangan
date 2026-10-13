@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\TenantDatabase;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,8 +13,16 @@ class AuditTrail extends Model
 
     protected $table = 'audit_trails';
 
+    /**
+     * `user_id` wajib ada di sini: kolomnya NOT NULL, dan tanpa ini nilai dari
+     * AuditTrail::log() dibuang diam-diam oleh mass-assignment guard sehingga
+     * penulisan dari luar HTTP (command/queue) gagal dengan
+     * "NOT NULL constraint failed".
+     *
+     * @var list<string>
+     */
     protected $fillable = [
-        'auditable_type', 'auditable_id', 'action',
+        'user_id', 'auditable_type', 'auditable_id', 'action',
         'old_values', 'new_values', 'reason', 'ip_address',
     ];
 
@@ -32,10 +41,17 @@ class AuditTrail extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Catat jejak audit untuk sebuah model.
+     *
+     * Pemilik ditentukan dari user yang terautentikasi, dengan fallback ke
+     * tenant yang sedang aktif (command/queue tidak punya Auth). Tanpa
+     * fallback, penulisan dari luar HTTP gagal karena `user_id` NOT NULL.
+     */
     public static function log($auditable, string $action, ?array $oldValues = null, ?array $newValues = null, ?string $reason = null, ?string $ipAddress = null)
     {
         return self::create([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id() ?? TenantDatabase::activeUserId(),
             'auditable_type' => get_class($auditable),
             'auditable_id' => $auditable->id,
             'action' => $action,

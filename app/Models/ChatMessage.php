@@ -12,6 +12,8 @@ class ChatMessage extends Model
 
     public const TIPE_ADMIN = 'admin';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'room_id',
         'sender_id',

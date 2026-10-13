@@ -93,7 +93,7 @@ class KasKeluarController extends Controller
     {
         $data = $request->validated();
 
-        $rekening = Rekening::findOrFail($data['rekening_id']);
+        $rekening = Rekening::where('is_aktif', true)->findOrFail($data['rekening_id']);
         $pajak = isset($data['pajak_id']) ? Pajak::find($data['pajak_id']) : null;
 
         $totalItems = 0;
@@ -222,7 +222,7 @@ class KasKeluarController extends Controller
     {
         DB::beginTransaction();
         try {
-            if ($kasKeluar->jurnal) {
+            if ($kasKeluar->jurnal && empty($kasKeluar->jurnal->voided_at)) {
                 JournalService::void($kasKeluar->jurnal, 'Pembatalan kas keluar');
             }
 

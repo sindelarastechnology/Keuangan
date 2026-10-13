@@ -101,6 +101,10 @@ class JurnalController extends Controller
 
     public function void(JurnalUmum $jurnal)
     {
+        if (! $jurnal->bolehVoidDariJurnalUmum()) {
+            return back()->with('error', $jurnal->pesanVoidDariJurnalUmum());
+        }
+
         try {
             JournalService::void($jurnal);
 

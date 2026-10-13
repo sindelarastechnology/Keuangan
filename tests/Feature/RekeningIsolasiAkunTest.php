@@ -26,6 +26,8 @@ class RekeningIsolasiAkunTest extends TestCase
         $user = User::where('email', 'admin@keuangan.test')->firstOrFail();
         $this->actingAs($user);
 
+        // Bersihkan rekening default yang dibuat provisioning tenant
+        Rekening::query()->delete();
         $akunBank = AkunPerkiraan::where('kode', '112')->firstOrFail();
 
         // Simulasi data lama: tiga rekening memakai akun bank yang sama persis.
@@ -64,6 +66,8 @@ class RekeningIsolasiAkunTest extends TestCase
         $user = User::where('email', 'admin@keuangan.test')->firstOrFail();
         $this->actingAs($user);
 
+        // Bersihkan rekening default yang dibuat provisioning tenant
+        Rekening::query()->delete();
         $akunKas = AkunPerkiraan::where('kode', '111')->firstOrFail();
         $rekening = Rekening::create(['jenis' => 'kas', 'nama' => 'Kas Lokal', 'akun_id' => $akunKas->id, 'saldo_awal' => 0, 'is_aktif' => true]);
 

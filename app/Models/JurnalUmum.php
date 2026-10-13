@@ -93,6 +93,56 @@ class JurnalUmum extends Model
     }
 
     /**
+     * Tipe jurnal yang pembatalannya wajib lewat menu transaksinya sendiri.
+     *
+     * @var array<int, string>
+     */
+    public const TIPE_VOID_DARI_MODUL = [
+        'kas_masuk', 'kas_keluar', 'mutasi_bank',
+        'pembelian', 'penjualan',
+        'retur_penjualan', 'retur_pembelian',
+        'penyesuaian_stok', 'perolehan_aset', 'penghapusan_aset',
+        'penyusutan',
+    ];
+
+    /**
+     * Menu asal tempat jurnal tipe tersebut dibatalkan.
+     *
+     * @var array<string, string>
+     */
+    public const MENU_VOID = [
+        'kas_masuk' => 'Kas Masuk',
+        'kas_keluar' => 'Kas Keluar',
+        'mutasi_bank' => 'Mutasi Bank',
+        'pembelian' => 'Pembelian',
+        'penjualan' => 'Penjualan',
+        'retur_penjualan' => 'Retur Penjualan',
+        'retur_pembelian' => 'Retur Pembelian',
+        'penyesuaian_stok' => 'Penyesuaian Stok',
+        'perolehan_aset' => 'Data Aset',
+        'penghapusan_aset' => 'Data Aset',
+        'penyusutan' => 'Penyusutan',
+    ];
+
+    public function bolehVoidDariJurnalUmum(): bool
+    {
+        return ! in_array($this->tipe, self::TIPE_VOID_DARI_MODUL, true);
+    }
+
+    public function pesanVoidDariJurnalUmum(): string
+    {
+        $menu = self::MENU_VOID[$this->tipe] ?? 'transaksi terkait';
+
+        return "Jurnal {$menu} tidak dapat dibatalkan dari Jurnal Umum. "
+            .'Batalkan dari menu '.$menu.' agar jurnal pembalik, alokasi piutang/hutang, dan stok ikut menyesuaikan.';
+    }
+
+    public function scopeBolehVoidUmum(Builder $query): Builder
+    {
+        return $query->whereNotIn('tipe', self::TIPE_VOID_DARI_MODUL);
+    }
+
+    /**
      * Kondisi query untuk mengecualikan jurnal yang dibatalkan (voided_at
      * terisi) beserta jurnal baliknya (yang mereferensikan jurnal tersebut)
      * dari laporan/detail buku besar. Dipakai lewat scope tanpaVoid maupun

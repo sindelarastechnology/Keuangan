@@ -80,16 +80,21 @@
                                                 <a href="{{ route('jurnal.show', $j) }}" aria-label="Lihat Jurnal {{ $j->nomor }}" class="inline-flex items-center justify-center w-11 h-11 text-slate-600 hover:bg-slate-100 rounded-md">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                                 </a>
-                                                @if($j->is_posted)
+@if($j->is_posted && $j->bolehVoidDariJurnalUmum())
                                                 <form method="POST" action="{{ route('jurnal.void', $j) }}">
                                                     @csrf
                                                     <button type="button" aria-label="Batalkan Jurnal {{ $j->nomor }}" class="inline-flex items-center justify-center w-11 h-11 text-amber-600 hover:bg-amber-50 rounded-md"
                                                             onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'batalkan-jurnal-{{ $j->id }}' }))">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 0118 0z"/></svg>
                                                     </button>
                                                     <x-confirm-dialog name="batalkan-jurnal-{{ $j->id }}" title="Batalkan Jurnal"
                                                                       message="Yakin ingin membatalkan jurnal '{{ $j->nomor }}'? Akan dibuat jurnal pembalik dan tindakan ini tidak dapat dibatalkan." />
                                                 </form>
+                                                @elseif($j->is_posted)
+                                                <span class="inline-flex items-center justify-center w-11 h-11 text-slate-300" aria-label="Dibatalkan dari menu {{ $j->tipe_label }}"
+                                                      title="Jurnal {{ $j->tipe_label }} dibatalkan dari menu asalnya.">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                                                </span>
                                                 @endif
                                             </div>
                                         </td>

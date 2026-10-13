@@ -50,9 +50,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => redirect()->route('dashboard'));
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'akun-aktif'])->name('dashboard');
+    ->middleware(['auth', 'akun-aktif', 'tenant-db'])->name('dashboard');
 
-Route::middleware(['auth', 'verified', 'akun-aktif'])->group(function () {
+Route::middleware(['auth', 'verified', 'akun-aktif', 'tenant-db'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

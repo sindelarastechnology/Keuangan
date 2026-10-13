@@ -11,6 +11,8 @@ class ChatReport extends Model
 
     public const STATUS_CLOSED = 'closed';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'message_id',
         'reporter_id',

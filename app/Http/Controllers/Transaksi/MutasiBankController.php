@@ -58,8 +58,8 @@ class MutasiBankController extends Controller
     {
         $data = $request->validated();
 
-        $rekeningAsal = Rekening::findOrFail($data['rekening_asal_id']);
-        $rekeningTujuan = Rekening::findOrFail($data['rekening_tujuan_id']);
+        $rekeningAsal = Rekening::where('is_aktif', true)->findOrFail($data['rekening_asal_id']);
+        $rekeningTujuan = Rekening::where('is_aktif', true)->findOrFail($data['rekening_tujuan_id']);
 
         $saldoKurang = (float) $rekeningAsal->saldo < (float) $data['nominal'];
 
@@ -108,7 +108,7 @@ class MutasiBankController extends Controller
     {
         DB::beginTransaction();
         try {
-            if ($mutasiBank->jurnal) {
+            if ($mutasiBank->jurnal && empty($mutasiBank->jurnal->voided_at)) {
                 JournalService::void($mutasiBank->jurnal, 'Pembatalan transfer rekening');
             }
             $mutasiBank->delete();

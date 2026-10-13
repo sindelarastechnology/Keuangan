@@ -10,3 +10,6 @@ Saat menghapus kolom/unique index yang masih dipakai foreign key di MySQL, harus
 
 ## Dedupe nama index dari SHOW INDEX sebelum drop
 SHOW INDEX MySQL mengembalikan SATU baris per kolom index komposit, jadi nama index muncul berkali-kali. Sebelum drop index unik/named, dedupe (unique) nama index dulu, dan gunakan Schema::hasIndex($table, $stringName) — argumen string diperlakukan sebagai NAMA index, array sebagai kolom.
+
+## Drop tabel tenant dari MySQL shared pakai migrasi ber-guard
+MySQL shared hanya untuk manajemen user + tabel framework; tabel tenant (dari TenantTables) dihapus lewat migrasi forward-only. Pada migrasi anonim `getConnection()` selalu null — deteksi konteks pakai `DB::getDefaultConnection() !== 'mysql'` (provision tenant mengarahkan default ke 'tenant') DAN `DB::connection('mysql')->getDriverName() !== 'mysql'` (test sqlite di-skip). Jangan tambah tabel tenant baru ke jalur migrasi shared tanpa guard ini.

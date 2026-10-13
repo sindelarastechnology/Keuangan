@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Transaksi;
 
+use App\Http\Requests\Concerns\ValidasiMilikTenant;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class StoreKasKeluarRequest extends FormRequest
 {
+    use ValidasiMilikTenant;
+
     /**
      * @return array<string, mixed>
      */
@@ -16,12 +19,12 @@ class StoreKasKeluarRequest extends FormRequest
     {
         return [
             'tanggal' => 'required|date',
-            'rekening_id' => 'required|exists:rekenings,id',
-            'supplier_id' => 'nullable|exists:suppliers,id',
+            'rekening_id' => ['required', $this->milikTenant('rekenings')],
+            'supplier_id' => ['nullable', $this->milikTenant('suppliers')],
             'keterangan' => 'nullable|string',
-            'pajak_id' => 'nullable|exists:pajak,id',
+            'pajak_id' => ['nullable', $this->milikTenant('pajak')],
             'items' => 'required|array|min:1',
-            'items.*.akun_id' => 'required|exists:akun_perkiraan,id',
+            'items.*.akun_id' => ['required', $this->milikTenant('akun_perkiraan')],
             'items.*.keterangan' => 'nullable|string',
             'items.*.nominal' => 'required|numeric|min:0',
         ];

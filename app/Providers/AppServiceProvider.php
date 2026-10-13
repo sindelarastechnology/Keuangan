@@ -35,6 +35,18 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('register', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());
         });
+
+        // Brute force pada form login: batasi per pasangan email+IP supaya satu
+        // akun tidak bisa dibombardir dari banyak IP, dan per IP supaya satu
+        // mesin tidak bisa menyapu banyak akun dengan email berbeda.
+        RateLimiter::for('login', function (Request $request) {
+            $email = mb_strtolower(trim((string) $request->input('email')));
+
+            return [
+                Limit::perMinute(5)->by('login:email-ip:'.sha1($email.'|'.$request->ip())),
+                Limit::perMinute(20)->by('login:ip:'.$request->ip()),
+            ];
+        });
     }
 
     private function registerEventListeners(): void

@@ -5,6 +5,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | Applies to | Rule file |
 | --- | --- |
 | resources/views/master/{barang,jasa}/** | .ai/rules/barangjasa.md |
+| bootstrap/app.php | .ai/rules/bootstrap.md |
 | resources/views/components/*.blade.php, resources/views/components/modal.blade.php, resources/views/components/loading-button.blade.php | .ai/rules/components.md |
 | app/Http/Controllers/DashboardController.php, app/Http/Controllers/ChatController.php, app/Http/Controllers/NotifikasiController.php | .ai/rules/controllers.md |
 | app/Services/ReportService.php, tests/Feature/AsetPenyusutanTest.php | .ai/rules/feature.md |
@@ -21,6 +22,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | resources/views/inventori/retur-penjualan/create.blade.php,resources/views/inventori/retur-pembelian/create.blade.php | .ai/rules/retur-pembelian.md |
 | routes/web.php, routes/auth.php | .ai/rules/routes.md |
 | app/Services/JournalService.php, app/Services/NomorGenerator.php, app/Services/**, app/Services/PengaturanSistemService.php, app/Services/ReportService.php | .ai/rules/services.md |
+| tests/Feature/** | .ai/rules/tests-feature.md |
 | tests/** | .ai/rules/tests.md |
 | app/Http/Controllers/Transaksi/Retur*Controller.php, app/Http/Controllers/Transaksi/*Controller.php, app/Http/Controllers/Transaksi/MutasiBankController.php, app/Http/Controllers/Transaksi/**, app/Http/Controllers/Transaksi/{Pembelian,Penjualan}Controller.php, app/Http/Controllers/Transaksi/KasMasukController.php, app/Http/Controllers/Transaksi/KasKeluarController.php, app/Http/Controllers/Transaksi/PenjualanController.php | .ai/rules/transaksi.md |
 | resources/views/transaksi/*/index.blade.php | .ai/rules/views-transaksi.md |

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SharedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\DatabaseNotification;
 
 class NotifikasiController extends Controller
 {
@@ -24,7 +24,7 @@ class NotifikasiController extends Controller
     /**
      * Tandai satu notifikasi sudah dibaca.
      */
-    public function baca(Request $request, DatabaseNotification $notification)
+    public function baca(Request $request, SharedNotification $notification)
     {
         $notifikasi = $request->user()
             ->notifications()
@@ -72,7 +72,7 @@ class NotifikasiController extends Controller
             ->orderByDesc('id')
             ->limit(5)
             ->get()
-            ->map(function (DatabaseNotification $notif) {
+            ->map(function (SharedNotification $notif) {
                 $data = is_array($notif->data) ? $notif->data : [];
 
                 return [

@@ -12,6 +12,8 @@ class ChatRoom extends Model
 
     public const TIPE_DM = 'dm';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'tipe',
         'user_a_id',
